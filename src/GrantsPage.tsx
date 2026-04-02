@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { VideoShowcase, ArtistBadge, SHOWCASE } from "./VideoShowcase";
 
 const SUPABASE_URL = "https://ujlwuvkrxlvoswwkerdf.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqbHd1dmtyeGx2b3N3d2tlcmRmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NzM3NzIzNywiZXhwIjoyMDgyNzM3MjM3fQ.fOgoG7m7c86_p7qqsHxtS0PoJTNNOsCvJP9jyivOsqk";
+const SUPABASE_KEY = "sb_publishable_O38oPBafrBoFrpi_rlWJvA_UJrulFsx";
 
 interface Grant {
   id: number;
@@ -33,7 +32,6 @@ interface Member {
   member_id: string;
   username: string;
   global_name: string | null;
-  server_nick: string | null;
   avatar_url: string | null;
   stored_avatar_url: string | null;
 }
@@ -106,8 +104,8 @@ export default function GrantsPage() {
         const applicantIds = [...new Set(grantData.map((g) => g.applicant_id))];
         if (applicantIds.length > 0) {
           const memberData = await fetchFromSupabase<Member[]>(
-            "discord_members",
-            `select=member_id,username,global_name,server_nick,avatar_url,stored_avatar_url&member_id=in.(${applicantIds.join(",")})`
+            "members",
+            `select=member_id,username,global_name,avatar_url,stored_avatar_url&member_id=in.(${applicantIds.join(",")})`
           );
           const memberMap = new Map<string, Member>();
           memberData.forEach((m) => memberMap.set(String(m.member_id), m));
@@ -224,7 +222,7 @@ export default function GrantsPage() {
               const assessment = parseAssessment(grant.llm_assessment);
               const isExpanded = expandedId === grant.id;
               const displayName =
-                member?.server_nick || member?.global_name || member?.username || "Unknown";
+                member?.global_name || member?.username || "Unknown";
 
               return (
                 <motion.div
