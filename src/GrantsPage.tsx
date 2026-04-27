@@ -120,7 +120,6 @@ export default function GrantsPage() {
     load();
   }, []);
 
-  const totalFunded = grants.reduce((sum, g) => sum + (g.total_cost_usd || 0), 0);
   const totalHours = grants.reduce((sum, g) => sum + (g.recommended_hours || 0), 0);
 
   return (
@@ -160,7 +159,7 @@ export default function GrantsPage() {
 
           {/* Stats */}
           {!loading && grants.length > 0 && (
-            <section className="grid grid-cols-3 gap-px mb-8 md:mb-14">
+            <section className="grid grid-cols-2 gap-px mb-8 md:mb-14">
               <div className="border border-[#39ff14]/10 bg-[#39ff14]/[0.03] p-2.5 md:p-5">
                 <p className="text-[8px] md:text-[9px] font-bold tracking-[0.15em] uppercase text-[#39ff14]/40">
                   Grants
@@ -181,17 +180,6 @@ export default function GrantsPage() {
                 </p>
                 <p className="text-[9px] md:text-[10px] text-white/40 mt-0.5 md:mt-1">
                   GPU hours allocated
-                </p>
-              </div>
-              <div className="border border-[#38bdf8]/10 bg-[#38bdf8]/[0.03] p-2.5 md:p-5">
-                <p className="text-[8px] md:text-[9px] font-bold tracking-[0.15em] uppercase text-[#38bdf8]/50">
-                  Funded
-                </p>
-                <p className="text-xs md:text-lg font-bold mt-1 md:mt-1.5 text-white/80">
-                  ${totalFunded.toFixed(0)}
-                </p>
-                <p className="text-[9px] md:text-[10px] text-white/40 mt-0.5 md:mt-1">
-                  total value
                 </p>
               </div>
             </section>
@@ -263,17 +251,24 @@ export default function GrantsPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 md:gap-5 flex-shrink-0">
-                      {/* GPU info */}
+                      {/* GPU type */}
                       {grant.gpu_type && (
                         <span className="hidden md:block text-[9px] tracking-[0.1em] uppercase text-white/25">
-                          {formatGpuType(grant.gpu_type)} &middot; {grant.recommended_hours}h
+                          {formatGpuType(grant.gpu_type)}
                         </span>
                       )}
-                      {/* Cost */}
-                      {grant.total_cost_usd && (
-                        <span className="text-xs md:text-sm font-bold text-[#39ff14]/70">
-                          ${grant.total_cost_usd.toFixed(0)}
-                        </span>
+                      {/* Hours (primary) + cost (secondary) */}
+                      {grant.recommended_hours && (
+                        <div className="text-right leading-tight">
+                          <p className="text-xs md:text-sm font-bold text-[#39ff14]/70">
+                            {grant.recommended_hours}h
+                          </p>
+                          {grant.total_cost_usd && (
+                            <p className="text-[9px] md:text-[10px] text-white/30 mt-0.5">
+                              ${grant.total_cost_usd.toFixed(0)}
+                            </p>
+                          )}
+                        </div>
                       )}
                       {/* Status badge */}
                       <span
