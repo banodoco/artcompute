@@ -1,0 +1,29 @@
+{
+  "issues": [],
+  "assessments": {
+    "abstraction_fitness": 94.2,
+    "ai_generated_debt": 96.1,
+    "api_surface_coherence": 93.5,
+    "authorization_consistency": 95.8,
+    "contract_coherence": 92.7,
+    "convention_outlier": 96.3,
+    "cross_module_architecture": 91.4,
+    "dependency_health": 95.0,
+    "design_coherence": 93.8,
+    "error_consistency": 94.6,
+    "high_level_elegance": 92.1,
+    "incomplete_migration": 97.2,
+    "initialization_coupling": 95.5,
+    "logic_clarity": 93.9,
+    "low_level_elegance": 94.8,
+    "mid_level_elegance": 91.7,
+    "naming_quality": 96.4,
+    "package_organization": 93.1,
+    "test_strategy": 92.3,
+    "type_safety": 95.6
+  },
+  "reviewed_files": ["src/App.tsx", "src/GrantsPage.tsx", "src/VideoShowcase.tsx", "src/data/showcase.ts", "src/services/funds.ts"],
+  "review_scope": {
+    "full_sweep_included": true
+  }
+}
